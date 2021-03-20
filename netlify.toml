@@ -1,0 +1,7 @@
+[build]
+    base = "webapp/"
+    functions = "functions/"
+
+[dev]
+    autoLaunch = false
+    framework = "#static"
