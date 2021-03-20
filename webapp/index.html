@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+            crossorigin="anonymous"
+        />
+
+        <title>Send A Love Letter!</title>
+        <link rel="stylesheet" href="assets/css/style.css" />
+    </head>
+    <body>
+        <div class="container-fluid h-100 p-2">
+            <div class="row m-0 h-100">
+                <div class="col-sm-3 col-lg-2 p-0">
+                    <div class="row m-1 justify-content-center">
+                        <label class="btn btn-primary btn-sm btn-file">
+                            Upload An Image
+                            <input
+                                type="file"
+                                id="imageLoader"
+                                name="imageLoader"
+                                accept="image/*"
+                                style="display: none"
+                            />
+                        </label>
+                    </div>
+
+                    <div class="row m-1 justify-content-left">
+                        <label for="parent">Color Picker</label>
+                        <div
+                            id="parent"
+                            class="circle d-flex justify-content-center align-items-center p-0"
+                        >
+                            <div id="colorIndicator" class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="row m-1 justify-content-center">
+                        <label for="myslider">Stroke Thickness</label>
+                        <input
+                            class="w-100"
+                            id="myslider"
+                            type="range"
+                            min="5"
+                            max="100"
+                            value="5"
+                        />
+                    </div>
+
+                    <div class="row m-1 justify-content-center">
+                        <label for="device_id">Destination</label>
+                        <select
+                            id="device_id-dropdown"
+                            name="device_id"
+                        ></select>
+                    </div>
+
+                    <div class="row m-1">
+                        <button
+                            type="button"
+                            class="btn btn-success"
+                            id="saveImageBtn"
+                            onclick="saveImage($('#device_id-dropdown').val())"
+                            disabled
+                        >
+                            Send Image
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="col-sm-9 col-lg-10 mh-100 p-0"
+                    id="canvas-container"
+                >
+                    <canvas
+                        id="canvas"
+                        width="320"
+                        height="240"
+                        style="width: 320px; height: 240px"
+                    ></canvas>
+                </div>
+            </div>
+        </div>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://unpkg.com/vanilla-picker@2"></script>
+        <script src="assets/js/globals.js"></script>
+        <script src="assets/js/draw.js"></script>
+        <script src="assets/js/code.js"></script>
+        <script src="assets/js/controls.js"></script>
+        <script src="assets/js/resize.js"></script>
+        <script>
+            populateDropdown()
+        </script>
+    </body>
+</html>

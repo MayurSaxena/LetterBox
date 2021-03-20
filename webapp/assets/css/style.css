@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+html,
+body {
+    /*overflow: hidden;*/
+    height: 100%;
+    margin: 0;
+}
+.circle {
+    border-radius: 50%;
+    border: 1px solid black;
+}
+#parent.circle {
+    height: 100px;
+    width: 100px;
+}
+#colorIndicator.circle {
+    height: 5px;
+    width: 5px;
+    border: 0px solid black;
+}
+canvas {
+    border: 1px solid black;
+    background-color: black;
+}
