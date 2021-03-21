@@ -19,6 +19,17 @@ exports.handler = async (event, context) => {
         }
     }
 
+    let userInfo = context.clientContext && context.clientContext.user
+    if (!userInfo) {
+        return {
+            statusCode: 403,
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: 'You must be logged in.',
+        }
+    }
+
     let req_body
     try {
         req_body = JSON.parse(event.body)
@@ -41,6 +52,34 @@ exports.handler = async (event, context) => {
                 'Content-Type': 'text/plain',
             },
             body: 'Bad Request',
+        }
+    }
+
+    let auth = await fetch(`${URL}/.netlify/functions/devices`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${context.clientContext.identity.token}`,
+        },
+    })
+        .then((res) => {
+            if (res.ok) {
+                return res.json()
+            }
+            throw new Error(res.statusText)
+        })
+        .then(
+            (json_res) =>
+                json_res.filter((dev) => dev.id == device_id).length > 0
+        )
+        .catch((error) => false)
+
+    if (!auth) {
+        return {
+            statusCode: 403,
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: 'You are not authorized to send to this device.',
         }
     }
 

@@ -14,11 +14,23 @@
 
         <title>Send A Love Letter!</title>
         <link rel="stylesheet" href="assets/css/style.css" />
+        <script
+            type="text/javascript"
+            src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+        ></script>
     </head>
     <body>
         <div class="container-fluid h-100 p-2">
             <div class="row m-0 h-100">
                 <div class="col-sm-3 col-lg-2 p-0">
+                    <div class="row m-1 justify-content-center">
+                        <button
+                            data-netlify-identity-button
+                            type="button"
+                            class="btn btn-info"
+                            onclick="netlifyIdentity.open()"
+                        ></button>
+                    </div>
                     <div class="row m-1 justify-content-center">
                         <label class="btn btn-primary btn-sm btn-file">
                             Upload An Image
@@ -73,6 +85,50 @@
                             Send Image
                         </button>
                     </div>
+                    <div class="row justify-content-center m-1 mt-5">
+                        <b>Register A Device</b>
+                        <form id="registrationForm">
+                            <div class="form-group">
+                                <label for="deviceSerial">Serial #</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="deviceSerial"
+                                    name="serial"
+                                    placeholder="12 characters 0-9 A-F"
+                                    minlength="12"
+                                    maxlength="12"
+                                    pattern="[0-9A-Fa-f]+"
+                                    style="text-transform: uppercase"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="deviceFriendly"
+                                    >Friendly Name</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="deviceFriendly"
+                                    name="friendly"
+                                    placeholder="What to call this Letterbox?"
+                                    pattern="[0-9A-Za-z\-_]+"
+                                    minlength="1"
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                class="btn btn-success m-1"
+                                id="registerDeviceBtn"
+                                onclick="registerDevice(event)"
+                            >
+                                Register
+                            </button>
+                        </form>
+                        <p id="registrationStatus"></p>
+                    </div>
                 </div>
                 <div
                     class="col-sm-9 col-lg-10 mh-100 p-0"
@@ -103,8 +159,5 @@
         <script src="assets/js/code.js"></script>
         <script src="assets/js/controls.js"></script>
         <script src="assets/js/resize.js"></script>
-        <script>
-            populateDropdown()
-        </script>
     </body>
 </html>
