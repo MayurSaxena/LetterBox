@@ -58,7 +58,7 @@ exports.handler = async (event, context) => {
     let auth = await fetch(`${URL}/.netlify/functions/devices`, {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${context.clientContext.identity.token}`,
+            Authorization: event.headers.authorization,
         },
     })
         .then((res) => {

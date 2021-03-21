@@ -106,6 +106,9 @@ async function registerDevice(e) {
         body: $('#registrationForm').serialize(),
     })
         .then((response) => {
+            if (response.ok) {
+                populateDropdown()
+            }
             return response.text()
         })
         .then((respText) => $('#registrationStatus').text(respText))

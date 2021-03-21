@@ -8,7 +8,6 @@ var client = new faunadb.Client({
 })
 
 exports.handler = async (event, context) => {
-    console.log(context)
     if (event.httpMethod !== 'GET') {
         return {
             statusCode: 405,
