@@ -1,6 +1,7 @@
 [build]
     base = "webapp/"
     functions = "functions/"
+    publish = "dist/"
 
 [dev]
     autoLaunch = false
