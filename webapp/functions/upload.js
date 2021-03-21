@@ -71,7 +71,7 @@ exports.handler = async (event, context) => {
             (json_res) =>
                 json_res.filter((dev) => dev.id == device_id).length > 0
         )
-        .catch((error) => false)
+        .catch((error) => error)
 
     if (!auth) {
         return {
@@ -79,7 +79,7 @@ exports.handler = async (event, context) => {
             headers: {
                 'Content-Type': 'text/plain',
             },
-            body: 'You are not authorized to send to this device.',
+            body: auth,
         }
     }
 
