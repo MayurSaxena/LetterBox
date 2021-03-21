@@ -24,7 +24,7 @@ exports.handler = async (event, context) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userInfo),
+        body: JSON.stringify(context.clientContext),
     }
     if (!userInfo) {
         return {
