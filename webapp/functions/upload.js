@@ -73,14 +73,12 @@ exports.handler = async (event, context) => {
         )
         .catch((error) => error)
 
-    if (!auth) {
-        return {
-            statusCode: 403,
-            headers: {
-                'Content-Type': 'text/plain',
-            },
-            body: auth,
-        }
+    return {
+        statusCode: 403,
+        headers: {
+            'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(auth),
     }
 
     let rgb565_buff = null
