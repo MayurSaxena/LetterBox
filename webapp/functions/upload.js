@@ -68,8 +68,8 @@ exports.handler = async (event, context) => {
             throw new Error(res.statusText)
         })
         .then(
-            (json_res) =>
-                json_res.filter((dev) => dev.id == device_id).length > 0
+            (json_res) => json_res
+            //json_res.filter((dev) => dev.id == device_id).length > 0
         )
         .catch((error) => error)
 
