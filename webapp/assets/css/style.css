@@ -24,3 +24,6 @@ canvas {
     border: 1px solid black;
     background-color: black;
 }
+a.netlify-identity-button {
+    color: black;
+}
