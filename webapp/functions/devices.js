@@ -19,13 +19,20 @@ exports.handler = async (event, context) => {
     }
 
     let userInfo = context.clientContext && context.clientContext.user
+    return {
+        statusCode: 200,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInfo),
+    }
     if (!userInfo) {
         return {
             statusCode: 200,
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userInfo),
+            body: JSON.stringify([]),
         }
     }
 
