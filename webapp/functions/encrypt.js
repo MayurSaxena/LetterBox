@@ -116,7 +116,7 @@ function RSAEncrypt(plaintext, public_key) {
             key: public_key,
             padding: crypto.constants.RSA_PKCS1_PADDING,
         },
-        plaintext
+        Buffer.from(plaintext)
     )
     return ciphertext.toString('base64')
 }
