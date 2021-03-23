@@ -7,19 +7,37 @@ const requestWithAuth = request.defaults({
 
 exports.handler = async (event, context) => {
     if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method Not Allowed' }
+        return {
+            statusCode: 405,
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: 'Method Not Allowed',
+        }
     }
 
     let req_body
     try {
         req_body = JSON.parse(event.body)
     } catch {
-        return { statusCode: 400, body: 'Bad Request' }
+        return {
+            statusCode: 400,
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: 'Bad Request',
+        }
     }
 
     let device_id = req_body.id
     if (device_id === undefined) {
-        return { statusCode: 400, body: 'Bad Request' }
+        return {
+            statusCode: 400,
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: 'Bad Request',
+        }
     }
 
     return requestWithAuth('GET /repos/{owner}/{repo}/contents/{path}', {
@@ -30,10 +48,25 @@ exports.handler = async (event, context) => {
         .then((response) => {
             return {
                 statusCode: 200,
-                body: response.data.sha,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sha: response.data.sha,
+                    content:
+                        req_body.content == 1
+                            ? response.data.content
+                            : undefined,
+                }),
             }
         })
         .catch((error) => {
-            return { statusCode: 200, body: '' }
+            return {
+                statusCode: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            }
         })
 }

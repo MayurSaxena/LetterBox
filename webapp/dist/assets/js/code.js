@@ -8,9 +8,9 @@ async function shouldOverwrite(device_id) {
         },
         body: JSON.stringify({ id: device_id }),
     })
-        .then((resp) => resp.text())
-        .then((txt) => {
-            if (txt != '') {
+        .then((resp) => resp.json())
+        .then((resp_json) => {
+            if (resp_json.sha) {
                 return window.confirm(
                     "There's already an image waiting to be seen! Overwrite it?"
                 )

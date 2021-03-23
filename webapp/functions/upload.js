@@ -135,11 +135,11 @@ exports.handler = async (event, context) => {
     })
         .then((res) => {
             if (res.ok) {
-                return res.text()
+                return res.json()
             }
             throw new Error(res.statusText)
         })
-        .then((txt) => (txt == '' ? undefined : txt))
+        .then((resp_json) => (resp_json.sha ? resp_json.sha : undefined))
         .catch((error) => null)
 
     if (existing_sha === null) {
