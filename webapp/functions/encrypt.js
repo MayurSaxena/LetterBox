@@ -98,7 +98,7 @@ exports.handler = async (event, context) => {
             headers: {
                 'Content-Type': 'text/plain',
             },
-            body: 'Encryption failed.',
+            body: `Encryption failed. ${error}`,
         }
     }
 }
