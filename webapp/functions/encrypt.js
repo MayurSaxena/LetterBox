@@ -80,16 +80,10 @@ exports.handler = async (event, context) => {
     try {
         let aes_key = crypto.randomBytes(32)
         let aes_iv = crypto.randomBytes(16)
-        let d = AESEncrypt(blob, aes_key, aes_iv)
-        console.log(d)
-        let k = RSAEncrypt(aes_key.toString('base64'), public_key)
-        console.log(k)
-        let i = RSAEncrypt(aes_iv.toString('base64'), public_key)
-        console.log(i)
         let response = {
-            d: d,
-            k: k,
-            i: i,
+            d: AESEncrypt(blob, aes_key, aes_iv),
+            k: RSAEncrypt(aes_key.toString('base64'), public_key),
+            i: RSAEncrypt(aes_iv.toString('base64'), public_key),
         }
         return {
             statusCode: 200,
@@ -99,7 +93,6 @@ exports.handler = async (event, context) => {
             body: JSON.stringify(response),
         }
     } catch (error) {
-        console.log(error)
         return {
             statusCode: 500,
             headers: {
