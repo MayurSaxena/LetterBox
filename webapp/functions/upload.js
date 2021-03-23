@@ -20,7 +20,9 @@ exports.handler = async (event, context) => {
     }
 
     let userInfo = context.clientContext && context.clientContext.user
-    if (!userInfo) {
+    let app_authorized_comms =
+        event.headers['x-authorized-comms'] == process.env.APP_COMMS_KEY
+    if (!userInfo && !app_authorized_comms) {
         return {
             statusCode: 403,
             headers: {
@@ -73,7 +75,7 @@ exports.handler = async (event, context) => {
         )
         .catch((error) => false)
 
-    if (!auth) {
+    if (!auth && !app_authorized_comms) {
         return {
             statusCode: 403,
             headers: {

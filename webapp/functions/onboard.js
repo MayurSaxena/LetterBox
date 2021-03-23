@@ -91,7 +91,10 @@ function onboardDevice(device_id) {
             id: device_id,
             data: onboard,
         }),
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorized-Comms': process.env.APP_COMMS_KEY,
+        },
     }).then((res) => {
         if (res.ok) {
             return {
