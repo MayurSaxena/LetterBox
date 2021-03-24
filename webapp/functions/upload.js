@@ -7,6 +7,7 @@ const requestWithAuth = request.defaults({
 const sharp = require('sharp')
 const fetch = require('node-fetch')
 const { URL } = process.env
+const zlib = require('zlib')
 
 exports.handler = async (event, context) => {
     if (event.httpMethod !== 'POST') {
@@ -100,11 +101,18 @@ exports.handler = async (event, context) => {
         return { statusCode: 400, body: 'Malformed Image' }
     }
 
+    let compressed_buffer
+    try {
+        compressed_buffer = zlib.deflateSync(rgb565_buff)
+    } catch {
+        return { statusCode: 400, body: 'Compression Failure' }
+    }
+
     let enc = await fetch(`${URL}/.netlify/functions/encrypt`, {
         method: 'POST',
         body: JSON.stringify({
             id: device_id,
-            data: rgb565_buff.toString('base64'),
+            data: compressed_buffer.toString('base64'),
         }),
         headers: { 'Content-Type': 'application/json' },
     })
