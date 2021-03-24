@@ -33,6 +33,7 @@ exports.handler = async (event, context) => {
     let device_id = req_body.id
     let blob = req_body.data
     if (device_id == null || blob == null) {
+        //need an id and something to encrypt
         return {
             statusCode: 400,
             headers: {
@@ -43,7 +44,7 @@ exports.handler = async (event, context) => {
     }
 
     try {
-        blob = Buffer.from(blob, 'base64')
+        blob = Buffer.from(blob, 'base64') //Does this check even do anything?
     } catch {
         return {
             statusCode: 400,
@@ -55,6 +56,7 @@ exports.handler = async (event, context) => {
     }
 
     let public_key = await requestWithAuth(
+        //get the public key
         'GET /repos/{owner}/{repo}/contents/{path}',
         {
             owner: process.env.REPO_OWNER,
@@ -64,7 +66,7 @@ exports.handler = async (event, context) => {
     )
         .then((response) => response.data)
         .then((data) => {
-            return Buffer.from(data.content, 'base64').toString('ascii')
+            return Buffer.from(data.content, 'base64').toString('ascii') //github base64's the content and gives it to us
         })
         .catch((error) => null)
 
@@ -78,11 +80,11 @@ exports.handler = async (event, context) => {
         }
     }
     try {
-        let aes_key = crypto.randomBytes(32)
+        let aes_key = crypto.randomBytes(32) //generate random key and IV
         let aes_iv = crypto.randomBytes(16)
         let response = {
-            d: AESEncrypt(blob, aes_key, aes_iv),
-            k: RSAEncrypt(aes_key.toString('base64'), public_key),
+            d: AESEncrypt(blob, aes_key, aes_iv), //blob encryption via AES using the above key and IV
+            k: RSAEncrypt(aes_key.toString('base64'), public_key), //save the key and IV also encrypted using RSA
             i: RSAEncrypt(aes_iv.toString('base64'), public_key),
         }
         return {

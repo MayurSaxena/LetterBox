@@ -58,6 +58,7 @@ exports.handler = async (event, context) => {
         }
     }
 
+    //make sure user is authorized to write to the device they're trying to
     let auth = await fetch(`${URL}/.netlify/functions/devices`, {
         method: 'GET',
         headers: {
@@ -101,6 +102,7 @@ exports.handler = async (event, context) => {
         return { statusCode: 400, body: 'Malformed Image' }
     }
 
+    //compress with deflate
     let compressed_buffer
     try {
         compressed_buffer = zlib.deflateSync(rgb565_buff)
@@ -108,6 +110,7 @@ exports.handler = async (event, context) => {
         return { statusCode: 400, body: 'Compression Failure' }
     }
 
+    //encrypt compressed bytes
     let enc = await fetch(`${URL}/.netlify/functions/encrypt`, {
         method: 'POST',
         body: JSON.stringify({
@@ -134,6 +137,7 @@ exports.handler = async (event, context) => {
         }
     }
 
+    //see if we need to overwrite anything
     let existing_sha = await fetch(`${URL}/.netlify/functions/waiting`, {
         method: 'POST',
         body: JSON.stringify({
@@ -160,6 +164,7 @@ exports.handler = async (event, context) => {
         }
     }
 
+    //write it out
     return requestWithAuth('PUT /repos/{owner}/{repo}/contents/{path}', {
         owner: process.env.REPO_OWNER,
         repo: process.env.REPO_NAME,

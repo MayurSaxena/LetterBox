@@ -2,7 +2,7 @@
 // By default, the color picker is a popup which appears when you click the parent.
 var picker = new Picker({
     parent: $('#parent').get(0),
-    alpha: false,
+    alpha: false, //no alpha selection
     popup: 'bottom',
     color: activeColor,
     onChange: function (c) {
@@ -14,7 +14,7 @@ var picker = new Picker({
 
 $('#myslider').on('input change', function () {
     context.lineWidth = parseInt($(this).val())
-    $('#colorIndicator').width(parseInt($(this).val()) * 1)
+    $('#colorIndicator').width(parseInt($(this).val()) * 1) //change the circle size
     $('#colorIndicator').height(parseInt($(this).val()) * 1)
 })
 

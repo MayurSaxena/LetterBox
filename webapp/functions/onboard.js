@@ -54,10 +54,10 @@ exports.handler = async (event, context) => {
     })
         .then((response) => response.data)
         .then((data) =>
-            onboardDevice(device_id)
+            onboardDevice(device_id) //try uploading the image to the device
                 .then((resp) => resp)
                 .catch((error) =>
-                    cleanup(device_id, data.content.sha)
+                    cleanup(device_id, data.content.sha) //if it didn't work, clean the folder by removing the key
                         .then((resp) => ({
                             statusCode: 400,
                             headers: {

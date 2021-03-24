@@ -64,12 +64,13 @@ exports.handler = async (event, context) => {
     let verifier = crypto.createVerify('RSA-SHA256')
     verifier.update(msg)
     if (verifier.verify(public_key, sig, 'base64')) {
+        //make sure msg was received for owner of private key
         return requestWithAuth('DELETE /repos/{owner}/{repo}/contents/{path}', {
             owner: process.env.REPO_OWNER,
             repo: process.env.REPO_NAME,
             path: `${device_id}/out.json`,
-            message: 'deleting file',
-            sha: Buffer.from(msg, 'base64').toString('ascii').split(';')[0],
+            message: `Deleting file for ${device_id}.`,
+            sha: Buffer.from(msg, 'base64').toString('ascii').split(';')[0], //semicolon separated message
         })
             .then((response) => ({
                 statusCode: 200,

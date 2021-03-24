@@ -42,8 +42,7 @@ exports.handler = async (event, context) => {
         }
     }
 
-    body.serial = body.serial.toUpperCase()
-
+    body.serial = body.serial.toUpperCase() //convert serial to uppercase
     // Check format of serial
     if (!/^([0-9A-F]{12})$/.test(body.serial)) {
         return {
@@ -68,6 +67,7 @@ exports.handler = async (event, context) => {
     return client
         .query(
             q.Create(q.Collection('devices'), {
+                //make the device
                 data: {
                     serial: body.serial,
                     friendly: body.friendly,
@@ -93,7 +93,7 @@ exports.handler = async (event, context) => {
                 headers: {
                     'Content-Type': 'text/plain',
                 },
-                body: `${errorText}`, //Uniqueness is constrained in Fauna index.
+                body: `${errorText}`, //Uniqueness is constrained by Fauna indexes.
             }
         })
 }

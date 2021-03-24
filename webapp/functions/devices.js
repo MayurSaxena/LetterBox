@@ -31,17 +31,17 @@ exports.handler = async (event, context) => {
 
     let devices = await client.query(
         q.Map(
-            q.Paginate(q.Match(q.Index('devices_by_user'), userInfo.sub)), //returns a list of Refs
+            q.Paginate(q.Match(q.Index('devices_by_user'), userInfo.sub)), //returns a list of Refs where this id is present
             q.Lambda(
-                'device_doc_ref',
+                'device_doc_ref', //given a doc ref
                 q.Let(
-                    { device_doc: q.Get(q.Var('device_doc_ref')) },
+                    { device_doc: q.Get(q.Var('device_doc_ref')) }, //let device_doc be the document referenced
                     {
-                        id: q.Select(['data', 'serial'], q.Var('device_doc')),
+                        id: q.Select(['data', 'serial'], q.Var('device_doc')), // get data.serial
                         name: q.Select(
                             ['data', 'friendly'],
                             q.Var('device_doc')
-                        ),
+                        ), //and data.friendly
                     }
                 )
             )
@@ -53,6 +53,6 @@ exports.handler = async (event, context) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(devices.data),
+        body: JSON.stringify(devices.data), //return a list of {id, name} dicts
     }
 }

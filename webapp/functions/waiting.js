@@ -40,6 +40,7 @@ exports.handler = async (event, context) => {
         }
     }
 
+    //simply checks if file exists, and returns sha (and optionally base64'd content)
     return requestWithAuth('GET /repos/{owner}/{repo}/contents/{path}', {
         owner: process.env.REPO_OWNER,
         repo: process.env.REPO_NAME,

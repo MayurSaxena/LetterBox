@@ -1,3 +1,5 @@
+// https://stackoverflow.com/questions/16057256/draw-on-a-canvas-via-mouse-and-touch/16068068
+
 var isIdle = true
 function drawstart(event) {
     context.beginPath()
