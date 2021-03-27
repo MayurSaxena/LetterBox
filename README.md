@@ -4,7 +4,7 @@
 
 I was looking for a hobby and a gift - so I thought why not try my hand at making one of these guys by myself? And I had fun doing it.
 
-Of course if you want to check out the original product, you can find it [here]:https://en.lovebox.love !
+Of course if you want to check out the original product, you can find it [here](https://en.lovebox.love)!
 
 ### Repo Structure
 
@@ -30,7 +30,7 @@ More details can be found in the README files inside each folder, but here's a n
 4. When the user sends an image, the image is encrypted with the registered public key (sort of). This way, only the entitled device can see the image.
 5. The LetterBox polls the server for any new images. When it finds one, it downloads and decrypts it.
 
-One of the cooler parts here (in my opinion) is that I'm just using GitHub as a file system and saving on infrastructure costs. I also believe everything is pretty well secured enough to leave that as a public repo, which can be found [here]:https://github.com/MayurSaxena/letterbox-storage . On top of that, I'm using the free tier of Netlify serverless functions and not needing infrastructure their either.
+One of the cooler parts here (in my opinion) is that I'm just using GitHub as a file system and saving on infrastructure costs. I also believe everything is pretty well secured enough to leave that as a public repo, which can be found [here](https://github.com/MayurSaxena/letterbox-storage). On top of that, I'm using the free tier of Netlify serverless functions and not needing infrastructure there either.
 
 ### Work To Be Done
 Of course, this project can be made better. Here are a few ideas:
