@@ -6,7 +6,7 @@
 from ili9341 import Display
 from machine import Pin, SPI, ADC, PWM
 from xglcd_font import XglcdFont   
-import uasyncio.get_event_loop
+from uasyncio import get_event_loop
 from letterbox import LetterBox
 
 def initialize_display():
@@ -25,11 +25,9 @@ lbox = LetterBox(DISPLAY, SERVO, PHOTORESISTOR, unispace_font)
 try:
     if lbox.initialize():
         lbox.bootup()
-        loop = uasyncio.get_event_loop()
+        loop = get_event_loop()
         loop.create_task(lbox.poll_async())
         loop.run_forever()
-except Exception as e:
-    print("Encountered an error {0}".format(str(e)))
 finally:
     print("Didn't start LetterBox.")
     DISPLAY.clear()
